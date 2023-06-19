@@ -1,11 +1,10 @@
 import { ColumnDef, SortingState, ColumnFiltersState, VisibilityState, flexRender, getCoreRowModel, getPaginationRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTablePagination } from "./data-table-pagination";
+import { DataTableViewOptions } from "./data-table-column-toggle";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -47,32 +46,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           onChange={event => table.getColumn("email")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='outline' className="ml-auto">
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table.getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
-              .map(column => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })
-            }
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
         <Table>
