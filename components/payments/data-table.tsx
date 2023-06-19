@@ -133,7 +133,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           variant='outline'
           size='sm'
           onClick={() => table.nextPage()}
-          disabled={!table.getCanPreviousPage()}
+          disabled={!table.getCanNextPage()}
         >
           Next
         </Button>
