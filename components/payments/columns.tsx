@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { DataTableColumnHeader } from "./data-table-header";
 
 export type Payment = {
   id: string
@@ -46,21 +47,15 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant='ghost'
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Amount" />
+    ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"))
       const formatted = new Intl.NumberFormat("en-us", {
@@ -68,7 +63,7 @@ export const columns: ColumnDef<Payment>[] = [
         currency: 'USD',
       }).format(amount)
 
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="font-medium">{formatted}</div>
     }
   },
   {
